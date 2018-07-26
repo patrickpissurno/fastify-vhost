@@ -1,4 +1,7 @@
 # fastify-vhost
+[![npm-version](https://img.shields.io/npm/v/fastify-vhost.svg)](https://www.npmjs.com/package/fastify-vhost)
+[![downloads](https://img.shields.io/npm/dt/fastify-vhost.svg)](http://npm-stats.com/~packages/fastify-vhost)
+[![license](https://img.shields.io/github/license/patrickpissurno/fastify-vhost.svg?maxAge=1800)](https://github.com/patrickpissurno/fastify-vhost/blob/master/LICENSE)
 
 Proxy subdomain http requests to another server.
 This [`fastify`](https://www.fastify.io) plugin forwards all the requests
