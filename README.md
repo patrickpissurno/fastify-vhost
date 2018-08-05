@@ -79,8 +79,8 @@ None yet. But you're welcome to open a PR.
 
 ## TODO
 
+* [x] Add unit tests (in progress)
 * [ ] Add benchmarks
-* [ ] Add unit tests
 
 ## License
 

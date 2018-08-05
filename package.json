@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "example": "node example.js",
-    "compile": "babel --presets es2015,stage-0 -d lib/ src/"
+    "compile": "babel --presets es2015,stage-0 -d lib/ src/",
+    "test": "npm run compile && node test.js"
   },
   "author": "Patrick Pissurno",
   "license": "MIT",
@@ -17,7 +18,11 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-preset-stage-0": "^6.24.1",
+    "fastify-multipart": "^0.5.1",
+    "pump": "^3.0.0",
+    "request-promise-native": "^1.0.5",
+    "tap": "^12.0.1"
   },
   "repository": {
     "type": "git",
