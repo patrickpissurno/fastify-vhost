@@ -1,6 +1,6 @@
 {
   "name": "fastify-vhost",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Proxy subdomain http requests to another server",
   "main": "lib/index.js",
   "scripts": {
