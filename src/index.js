@@ -5,13 +5,14 @@ module.exports = fp(function (fastify, opts, done) {
     if (!opts.upstream) 
         throw new Error('upstream must be specified');
 
-    if(!opts.subdomain)
-        throw new Error('subdomain must be specified');
+    if(!opts.subdomain && !opts.fullHost)
+        throw new Error('either subdomain or fullHost must be specified');
 
-    const subdomain = opts.subdomain + '.';
+    const subdomain = opts.subdomain ? (opts.subdomain + '.') : null;
+    const fullHost = opts.fullHost ? (opts.fullHost) : null;
 
     fastify.addHook('onRequest', (req, res, next) => {
-        if(req.headers.host != null && req.headers.host.indexOf(subdomain) !== -1)
+        if(req.headers.host != null && (fullHost ? req.headers.host == fullHost : req.headers.host.indexOf(subdomain) !== -1))
         {
             let target = { url: req.url, baseUrl: opts.upstream, headers: req.headers };
             try
