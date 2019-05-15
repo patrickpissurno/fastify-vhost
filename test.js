@@ -20,6 +20,7 @@ async function listen(){
     fastifyB.get('/', async (req, reply) => 'Hi from test.example.com');
     fastifyA.get('/headers', async (req, reply) => req.headers);
     fastifyB.get('/headers', async (req, reply) => req.headers);
+    fastifyB.get('/timeout', async (req, reply) => { });
 
     fastifyA.post('/multipart', (req, reply) => {
         function handler (field, file, filename, encoding, mimetype) {
@@ -54,14 +55,15 @@ async function listen(){
 
     fastifyA.register(vhost, {
         upstream: 'http://localhost:3001',
-        host: 'test.example.com'
+        host: 'test.example.com',
+        timeout: 3000
     });
 
-    // fastifyA.register(vhost, {
-    //     upstream: 'http://localhost:3002',
-    //     host: 'test2.example.com',
-    //     timeout: 1000
-    // });
+    fastifyA.register(vhost, {
+        upstream: 'http://localhost:3002',
+        host: 'test2.example.com',
+        timeout: 1000
+    });
 
     fastifyA.register(require('fastify-multipart'));
     fastifyB.register(require('fastify-multipart'));
@@ -80,10 +82,34 @@ async function testGET(){
         let r = await rp('http://test.example.com:3000');
         tap.equal(r, 'Hi from test.example.com');
     });
-    // await tap.test('GET subdomain (offline upstream)', async () => {
-    //     let r = await rp('http://test2.example.com:3000');
-    //     tap.equal(r, 'Hi from test2.example.com');
-    // });
+    await tap.test('GET subdomain (offline upstream)', async () => {
+        let r = await (async () => {
+            try {
+                await rp('http://test2.example.com:3000');
+                return 200;
+            }
+            catch(ex){
+                if(ex && ex.response)
+                    return ex.response.statusCode;
+                return 500;
+            }
+        })();
+        tap.equal(r, 503, 'offline upstream should return Service Unavailable (503)');
+    });
+    await tap.test('GET subdomain (timeout upstream)', async () => {
+        let r = await (async () => {
+            try {
+                await rp('http://test.example.com:3000/timeout');
+                return 200;
+            }
+            catch(ex){
+                if(ex && ex.response)
+                    return ex.response.statusCode;
+                return 500;
+            }
+        })();
+        tap.equal(r, 504, 'timeout upstream should return Gateway Timeout (504)');
+    });
 }
 async function testHeaders(){
     const opt = {

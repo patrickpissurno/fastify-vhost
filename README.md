@@ -7,11 +7,9 @@ Proxy subdomain http requests to another server.
 This [`fastify`](https://www.fastify.io) plugin forwards all the requests
 received with a given subdomain to an upstream.
 
-`fastify-vhost` is built on top of
-[`request`](https://www.npmjs.com/package/request), which enables
-http request piping.
+`fastify-vhost` is powered by the popular Nodejitsu [`http-proxy`](https://github.com/nodejitsu/node-http-proxy). [![GitHub stars](https://img.shields.io/github/stars/nodejitsu/node-http-proxy.svg?style=social&label=Star)](https://github.com/nodejitsu/node-http-proxy)
 
-This plugin can be used if you want to point multiple subdomains to the same IP address, while running different servers on the same machine.
+This plugin can be used if you want to point multiple (sub)domains to the same IP address, while running different servers on the same machine.
 
 ## Install
 
@@ -67,7 +65,7 @@ This `fastify` plugin supports the following options.
 
 ### upstream
 
-An URL (including protocol) that represents the target server to use for proxying.
+An URL (including protocol) that the requests will be forwarded to (eg. http://localhost:3000).
 
 ### host
 
@@ -75,7 +73,11 @@ The host to mount this plugin on. All the requests to the current server where t
 
 ### strict
 
-Default: false. When strict mode is enabled, the host header has to be an exact match. When disabled, 'EXAMPLE.COM', 'example.com' and 'example.com:3000' will match 'example.com'.
+```Default: false```. When strict mode is enabled, the host header has to be an exact match. When disabled, 'EXAMPLE.COM', 'example.com' and 'example.com:3000' will match 'example.com'.
+
+### timeout
+
+```Default: 30000```. Timeout in milliseconds for the proxy to return a ```504 Gateway Timeout```.
 
 ## Benchmarks
 
@@ -83,7 +85,9 @@ None yet. But you're welcome to open a PR.
 
 ## TODO
 
-* [x] Add unit tests (in progress)
+* [x] Add unit tests
+* [x] Add integration tests
+* [x] Coverage 100%
 * [ ] Add benchmarks
 
 ## License

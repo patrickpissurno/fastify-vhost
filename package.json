@@ -13,7 +13,7 @@
   "dependencies": {
     "fastify": "^1.14.1",
     "fastify-plugin": "^1.5.0",
-    "request": "^2.88.0"
+    "http-proxy": "^1.17.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -21,6 +21,7 @@
     "@babel/preset-env": "^7.3.1",
     "fastify-multipart": "^0.6.0",
     "pump": "^3.0.0",
+    "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "tap": "^13.1.9"
   },
