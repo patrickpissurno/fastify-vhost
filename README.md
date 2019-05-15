@@ -53,7 +53,7 @@ server.register(vhost, {
 server.listen(80)
 ```
 
-Notice that it is **CRITICAL** to provide the full `host` (subdomain + domain) so that vhost proper properly routes the requests across different upstreams.
+Notice that it is **CRITICAL** to provide the full `host` (subdomain + domain) so that it properly routes the requests across different upstreams.
 
 For other examples, see `example.js`.
 
