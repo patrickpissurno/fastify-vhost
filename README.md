@@ -1,5 +1,8 @@
 # fastify-vhost
 [![npm-version](https://img.shields.io/npm/v/fastify-vhost.svg)](https://www.npmjs.com/package/fastify-vhost)
+[![build status](https://travis-ci.org/patrickpissurno/fastify-vhost.svg?branch=master)](https://travis-ci.org/patrickpissurno/fastify-vhost)
+[![coverage status](https://coveralls.io/repos/github/patrickpissurno/fastify-vhost/badge.svg?branch=master)](https://coveralls.io/github/patrickpissurno/fastify-vhost?branch=master)
+[![known vulnerabilities](https://snyk.io/test/github/patrickpissurno/fastify-vhost/badge.svg)](https://snyk.io/test/github/patrickpissurno/fastify-vhost)
 [![downloads](https://img.shields.io/npm/dt/fastify-vhost.svg)](http://npm-stats.com/~packages/fastify-vhost)
 [![license](https://img.shields.io/github/license/patrickpissurno/fastify-vhost.svg?maxAge=1800)](https://github.com/patrickpissurno/fastify-vhost/blob/master/LICENSE)
 
