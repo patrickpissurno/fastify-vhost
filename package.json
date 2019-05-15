@@ -6,7 +6,7 @@
   "scripts": {
     "example": "node example.js",
     "compile": "babel --presets @babel/preset-env -d lib/ src/",
-    "test": "npm run compile && tap test.js ./src/matches.test.js"
+    "test": "tap test.js ./src/matches.test.js"
   },
   "author": "Patrick Pissurno",
   "license": "MIT",

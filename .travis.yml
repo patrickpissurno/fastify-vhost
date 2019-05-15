@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "10"
+os:
+  - linux
+addons:
+  hosts:
+    - example.com
+    - test.example.com
+    - test2.example.com
