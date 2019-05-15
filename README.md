@@ -27,13 +27,13 @@ const server = Fastify()
 
 server.register(require('fastify-vhost'), {
   upstream: 'http://localhost:3000',
-  subdomain: 'test'
+  host: 'test.example.com'
 })
 
 server.listen(80)
 ```
 
-This will proxy any request to the `test` subdomain to the server running at `http://localhost:3000`. For instance `http://test.example.com/users` will be proxied to `http://example.com:3000/users`.
+This will proxy any request to the `test` subdomain to the server running at `http://localhost:3000`. For instance `http://test.example.com/users` will be proxied to `http://localhost:3000/users`.
 
 If you want to have different vhosts for different subdomains you can register multiple instances of the plugin as shown in the following snippet:
 
@@ -44,18 +44,18 @@ const vhost = require('fastify-vhost')
 
 server.register(vhost, {
   upstream: 'http://localhost:3000',
-  subdomain: 'test'
+  host: 'test.example.com'
 })
 
 server.register(vhost, {
   upstream: 'http://localhost:3001',
-  subdomain: 'other'
+  host: 'other.example.com'
 })
 
 server.listen(80)
 ```
 
-Notice that it is **VERY** important to provide the full `subdomain` to tell the vhost how to properly route the requests across different upstreams.
+Notice that it is **CRITICAL** to provide the full `host` (subdomain + domain) so that vhost proper properly routes the requests across different upstreams.
 
 For other examples, see `example.js`.
 
@@ -69,9 +69,13 @@ This `fastify` plugin supports the following options.
 
 An URL (including protocol) that represents the target server to use for proxying.
 
-### subdomain
+### host
 
-The subdomain to mount this plugin on. All the requests to the current server where the `host` header contains the given subdomain will be proxied to the provided upstream.
+The host to mount this plugin on. All the requests to the current server where the `host` header matches this string will be proxied to the provided upstream.
+
+### strict
+
+Default: false. When strict mode is enabled, the host header has to be an exact match. When disabled, 'EXAMPLE.COM', 'example.com' and 'example.com:3000' will match 'example.com'.
 
 ## Benchmarks
 

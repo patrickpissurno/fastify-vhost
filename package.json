@@ -1,12 +1,12 @@
 {
   "name": "fastify-vhost",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Proxy subdomain http requests to another server",
   "main": "lib/index.js",
   "scripts": {
     "example": "node example.js",
     "compile": "babel --presets @babel/preset-env -d lib/ src/",
-    "test": "npm run compile && node test.js"
+    "test": "npm run compile && tap test.js ./src/matches.test.js"
   },
   "author": "Patrick Pissurno",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "fastify-multipart": "^0.6.0",
     "pump": "^3.0.0",
     "request-promise-native": "^1.0.5",
-    "tap": "^12.5.2"
+    "tap": "^13.1.9"
   },
   "repository": {
     "type": "git",

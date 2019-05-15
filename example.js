@@ -9,7 +9,7 @@ fastifyB.get('/', async (req, reply) => 'Hi from test.example.com');
 
 fastifyA.register(vhost, {
     upstream: 'http://localhost:3001',
-    subdomain: 'test'
+    host: 'test.example.com'
 });
 
 fastifyA.listen(3000, '0.0.0.0', () => console.log('A running'));

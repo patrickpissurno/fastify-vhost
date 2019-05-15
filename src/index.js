@@ -1,20 +1,44 @@
 const fp = require('fastify-plugin');
 const request = require('request');
+const matches = require('./matches');
 
 module.exports = fp(function (fastify, opts, done) {
     if (!opts.upstream) 
         throw new Error('upstream must be specified');
 
-    if(!opts.subdomain && !opts.fullHost)
-        throw new Error('either subdomain or fullHost must be specified');
+    if(!opts.host){
+        if(opts.subdomain)
+            throw new Error('"subdomain" option was removed in version 1.1.x');
 
-    const subdomain = opts.subdomain ? (opts.subdomain + '.') : null;
-    const fullHost = opts.fullHost ? (opts.fullHost) : null;
+        if(opts.fullHost){
+            console.warn('Deprecation notice: "fullHost" was renamed to "host" in version 1.1.x and may me removed in future versions');
+            opts.host = opts.fullHost;
+        }
+        else
+            throw new Error('host must be specified');
+    }
+
+    if(typeof(opts.host) !== 'string')
+        throw new Error('host must be string');
+
+    if(opts.host.indexOf('.') === -1)
+        throw new Error('host must contain the TLD (eg. should be "example.com" instead of "example"). Please refer to the docs for further information');
+
+    let timeout = 30 * 1000;
+    if(opts.timeout !== undefined){
+        if(typeof(opts.timeout) !== 'number' || isNaN(opts.timeout))
+            throw new Error('timeout should be a valid number');
+        if(opts.timeout <= 0)
+            throw new Error('timeout should be greater than 0');
+        timeout = opts.timeout;
+    }
+
+    const strict = opts.strict === true;
 
     fastify.addHook('onRequest', (req, res, next) => {
-        if(req.headers.host != null && (fullHost ? req.headers.host == fullHost : req.headers.host.indexOf(subdomain) !== -1))
+        if(matches(req.headers, opts.host, strict))
         {
-            let target = { url: req.url, baseUrl: opts.upstream, headers: req.headers };
+            let target = { url: req.url, baseUrl: opts.upstream, headers: req.headers, timeout };
             try
             {
                 req.pipe(request(target)).pipe(res);

@@ -1,5 +1,6 @@
 const fastify = require('fastify');
-const vhost = require('.');
+const vhost = require('./src');
+const noop = () => {};
 
 const tap = require('tap');
 const rp = require('request-promise-native');
@@ -53,8 +54,14 @@ async function listen(){
 
     fastifyA.register(vhost, {
         upstream: 'http://localhost:3001',
-        subdomain: 'test'
+        host: 'test.example.com'
     });
+
+    // fastifyA.register(vhost, {
+    //     upstream: 'http://localhost:3002',
+    //     host: 'test2.example.com',
+    //     timeout: 1000
+    // });
 
     fastifyA.register(require('fastify-multipart'));
     fastifyB.register(require('fastify-multipart'));
@@ -73,6 +80,10 @@ async function testGET(){
         let r = await rp('http://test.example.com:3000');
         tap.equal(r, 'Hi from test.example.com');
     });
+    // await tap.test('GET subdomain (offline upstream)', async () => {
+    //     let r = await rp('http://test2.example.com:3000');
+    //     tap.equal(r, 'Hi from test2.example.com');
+    // });
 }
 async function testHeaders(){
     const opt = {
@@ -131,7 +142,23 @@ async function testMultipart(){
     fs.unlinkSync('test1-original.txt');
 }
 
+function testOptions(){
+    tap.throws(() => vhost(null, null), {}, 'null options should throw');
+    tap.throws(() => vhost(null, { host: 'test.com' }), {}, 'options missing upstream should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost' }), {}, 'options missing host should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost', subdomain: 'test' }), {}, 'options containing subdomain should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost', host: 123 }), {}, 'non-string host should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost', host: 'test' }), {}, 'tld-missing host should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost', host: 'test.com', timeout: 'invalid' }), {}, 'invalid timeout should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost', host: 'test.com', timeout: -1 }), {}, 'negative timeout should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost', host: 'test.com', timeout: 0 }), {}, 'timeout=0 should throw');
+
+    tap.doesNotThrow(() => vhost(fastify(), { upstream: 'localhost', fullHost: 'test.com' }, noop), {}, 'should support "fullHost" alias for "host"');
+}
+
 async function tests(){
+    testOptions();
+
     await tap.test('listen', async (t) => listen());
     await testGET();
     await testHeaders();
