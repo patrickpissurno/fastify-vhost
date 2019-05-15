@@ -21,6 +21,8 @@ async function listen(){
     fastifyA.get('/headers', async (req, reply) => req.headers);
     fastifyB.get('/headers', async (req, reply) => req.headers);
     fastifyB.get('/timeout', async (req, reply) => { });
+    fastifyB.get('/error500', (req, reply) => reply.status(500).send('Internal Server Error'));
+    fastifyB.get('/error400', (req, reply) => reply.status(400).send('Bad Request'));
 
     fastifyA.post('/multipart', (req, reply) => {
         function handler (field, file, filename, encoding, mimetype) {
@@ -109,6 +111,34 @@ async function testGET(){
             }
         })();
         tap.equal(r, 504, 'timeout upstream should return Gateway Timeout (504)');
+    });
+    await tap.test('GET subdomain (500 error upstream)', async () => {
+        let r = await (async () => {
+            try {
+                await rp('http://test.example.com:3000/error500');
+                return 200;
+            }
+            catch(ex){
+                if(ex && ex.response)
+                    return ex.response.statusCode;
+                return -1;
+            }
+        })();
+        tap.equal(r, 500, '500 error upstream should be forwarded');
+    });
+    await tap.test('GET subdomain (400 error upstream)', async () => {
+        let r = await (async () => {
+            try {
+                await rp('http://test.example.com:3000/error400');
+                return 200;
+            }
+            catch(ex){
+                if(ex && ex.response)
+                    return ex.response.statusCode;
+                return 500;
+            }
+        })();
+        tap.equal(r, 400, '400 error upstream should be forwarded');
     });
 }
 async function testHeaders(){

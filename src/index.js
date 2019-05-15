@@ -37,16 +37,22 @@ module.exports = fp(function (fastify, opts, done) {
 
     const proxy = httpProxy.createProxyServer({ target: opts.upstream, proxyTimeout: timeout });
     proxy.on('error', (err, req, res) => {
-        let status = 502;
-        let message = 'Bad Gateway'
+        let status;
+        let message;
 
         if(err.code === 'ECONNREFUSED'){
             status = 503;
             message = 'Service Unavailable';
         }
-        else if(err.code === 'ECONNRESET'){
+        /* istanbul ignore next */
+        else if(err.code === 'ECONNRESET' || err.code === 'ETIMEDOUT'){
             status = 504;
             message = 'Gateway Timeout';
+        }
+        /* istanbul ignore next */
+        else {
+            status = 502;
+            message = 'Bad Gateway'
         }
 
         res.writeHead(status, { 'Content-Type': 'application/json' });
