@@ -64,11 +64,18 @@ module.exports = fp(function (fastify, opts, done) {
     });
 
     fastify.addHook('onRequest', (req, res, next) => {
+        if(req.req == null) //fastify 1.x.x
+            handleRequest(req, res, next);
+        else //fastify 2.x.x
+            handleRequest(req.req, res.res, next);
+    });
+
+    function handleRequest(req, res, next){
         if(matches(req.headers, opts.host, strict))
             proxy.web(req, res);
         else
             next();
-    });
+    }
 
     done();
 });
