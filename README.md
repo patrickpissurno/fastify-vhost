@@ -14,6 +14,9 @@ received with a given subdomain to an upstream.
 
 This plugin can be used if you want to point multiple (sub)domains to the same IP address, while running different servers on the same machine.
 
+## Fastify support
+Prior to `fastify-vhost@1.1.3` we only supported `fastify@1.x.x`. We are proud to announce that `fastify-vhost` now supports both v1 and v2!
+
 ## Install
 
 ```
@@ -85,6 +88,10 @@ The host to mount this plugin on. All the requests to the current server where t
 ## Benchmarks
 
 None yet. But you're welcome to open a PR.
+
+## ES5 support
+
+Despite not offering ES5 support (no tests for it, or whatsoever), we'll keep it available. Although we don't recommend it, if you need / want to give it a try, import fastify-vhost like this `require('fastify-vhost/es5')` instead of `require('fastify-vhost')`.
 
 ## TODO
 

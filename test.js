@@ -1,5 +1,5 @@
 const fastify = require('fastify');
-const vhost = require('./src');
+const vhost = require('.');
 const noop = () => {};
 
 const tap = require('tap');

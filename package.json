@@ -2,11 +2,11 @@
   "name": "fastify-vhost",
   "version": "1.1.2",
   "description": "Proxy subdomain http requests to another server",
-  "main": "src/index.js",
+  "main": "./lib",
   "scripts": {
     "example": "node example.js",
-    "compile": "babel --presets @babel/preset-env -d lib/ src/",
-    "test": "tap test.js ./src/matches.test.js --100"
+    "compile": "babel --presets @babel/preset-env -d lib/* lib/es5",
+    "test": "tap test.js lib/*.test.js --100"
   },
   "author": "Patrick Pissurno",
   "license": "MIT",
