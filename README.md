@@ -91,7 +91,7 @@ None yet. But you're welcome to open a PR.
 
 ## ES5 support
 
-Despite not offering ES5 support (no tests for it, or whatsoever), we'll keep it available. Although we don't recommend it, if you need / want to give it a try, import fastify-vhost like this `require('fastify-vhost/es5')` instead of `require('fastify-vhost')`.
+Despite not offering ES5 support (no tests for it, or whatsoever), we'll keep it available. Although we don't recommend it, if you need / want to give it a try, import fastify-vhost like this `require('fastify-vhost/lib/es5')` instead of `require('fastify-vhost')`.
 
 ## TODO
 
