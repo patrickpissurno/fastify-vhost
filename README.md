@@ -126,7 +126,7 @@ The host to mount this plugin on. All the requests to the current server where t
 
 ### hosts
 
-Equivalent to the host option, but is an array of strings. All the requests to the current server where the `host` header matches any of the strings will be proxied to the provided upstream.
+Equivalent to the `host` option, but an array of strings. All the requests to the current server where the `host` header matches any of the strings will be proxied to the provided upstream.
 
 ### strict
 
