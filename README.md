@@ -59,7 +59,7 @@ server.register(vhost, {
 server.listen(80)
 ```
 
-You can also specify multiple aliases for each vhost with the hosts option:
+You can also specify multiple aliases for each vhost with the `hosts` option:
 
 ```js
 const Fastify = require('fastify')
@@ -79,7 +79,7 @@ server.register(vhost, {
 server.listen(80)
 ```
 
-The example above would behave the same as the following:
+The above example would behave the same as the following:
 
 ```js
 const Fastify = require('fastify')
