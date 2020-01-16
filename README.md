@@ -59,6 +59,53 @@ server.register(vhost, {
 server.listen(80)
 ```
 
+You can also specify multiple aliases for each vhost with the hosts option:
+
+```js
+const Fastify = require('fastify')
+const server = Fastify()
+const vhost = require('fastify-vhost')
+
+server.register(vhost, {
+  upstream: 'http://localhost:3000',
+  hosts: ['test.example.com', 'test2.example.com']
+})
+
+server.register(vhost, {
+  upstream: 'http://localhost:3001',
+  host: 'other.example.com'
+})
+
+server.listen(80)
+```
+
+The example above would behave the same as the following:
+
+```js
+const Fastify = require('fastify')
+const server = Fastify()
+const vhost = require('fastify-vhost')
+
+server.register(vhost, {
+  upstream: 'http://localhost:3000',
+  host: 'test.example.com'
+})
+
+server.register(vhost, {
+  upstream: 'http://localhost:3000',
+  host: 'test2.example.com'
+})
+
+server.register(vhost, {
+  upstream: 'http://localhost:3001',
+  host: 'other.example.com'
+})
+
+server.listen(80)
+```
+
+But in a much neater way.
+
 Notice that it is **CRITICAL** to provide the full `host` (subdomain + domain) so that it properly routes the requests across different upstreams.
 
 For other examples, see `example.js`.
@@ -76,6 +123,10 @@ An URL (including protocol) that the requests will be forwarded to (eg. http://l
 ### host
 
 The host to mount this plugin on. All the requests to the current server where the `host` header matches this string will be proxied to the provided upstream.
+
+### hosts
+
+Equivalent to the host option, but is an array of strings. All the requests to the current server where the `host` header matches any of the strings will be proxied to the provided upstream.
 
 ### strict
 

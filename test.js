@@ -312,6 +312,8 @@ function testOptions(){
     tap.throws(() => vhost(null, { upstream: 'localhost', host: 'test.com', timeout: 'invalid' }), {}, 'invalid timeout should throw');
     tap.throws(() => vhost(null, { upstream: 'localhost', host: 'test.com', timeout: -1 }), {}, 'negative timeout should throw');
     tap.throws(() => vhost(null, { upstream: 'localhost', host: 'test.com', timeout: 0 }), {}, 'timeout=0 should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost', host: 'test.com', hosts: [ ] }), {}, 'with both host and hosts should throw');
+    tap.throws(() => vhost(null, { upstream: 'localhost', hosts: [ ] }), {}, 'empty hosts should throw');
 
     tap.doesNotThrow(() => vhost(fastify(), { upstream: 'localhost', fullHost: 'test.com' }, noop), {}, 'should support "fullHost" alias for "host"');
 }
