@@ -11,19 +11,19 @@
   "author": "Patrick Pissurno",
   "license": "MIT",
   "dependencies": {
-    "fastify": "^2.15.3",
-    "fastify-plugin": "^1.6.1",
+    "fastify": "^3.17.0",
+    "fastify-plugin": "^3.0.0",
     "http-proxy": "^1.18.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "fastify-multipart": "^1.0.6",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "fastify-multipart": "^4.0.6",
     "pump": "^3.0.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
-    "tap": "^14.11.0"
+    "tap": "^15.0.9"
   },
   "repository": {
     "type": "git",
