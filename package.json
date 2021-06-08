@@ -5,7 +5,6 @@
   "main": "./lib",
   "scripts": {
     "example": "node example.js",
-    "compile": "babel --presets @babel/preset-env -d lib/* lib/es5",
     "test": "tap test.js lib/*.test.js --100"
   },
   "author": "Patrick Pissurno",
@@ -16,9 +15,6 @@
     "http-proxy": "^1.18.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.4",
     "fastify-multipart": "^4.0.6",
     "pump": "^3.0.0",
     "request": "^2.88.2",
