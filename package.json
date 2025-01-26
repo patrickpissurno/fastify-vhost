@@ -21,6 +21,10 @@
     "request-promise-native": "^1.0.9",
     "tap": "^21.0.1"
   },
+  "overrides": {
+    "cookie": "0.7.2",
+    "tough-cookie": "4.1.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/patrickpissurno/fastify-vhost.git"
